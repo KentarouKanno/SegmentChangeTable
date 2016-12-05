@@ -13,7 +13,6 @@ class FirstViewController: UIViewController {
     @IBOutlet weak var label: UILabel!
     var item: String!
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         

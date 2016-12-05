@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, FirstViewDelegate, SecondViewDelegate {
     
     @IBOutlet var firstView: FirstView!
     @IBOutlet var secondView: SecondView!
@@ -20,42 +20,43 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        firstView.parent = self
-        secondView.parent = self
+        firstView.delegate  = self
+        secondView.delegate = self
         tableBaseView.addSubview(firstView)
         tableBaseView.addSubview(secondView)
+        
         changedSegmentValue(tableSegment)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        firstView.frame = tableBaseView.bounds
+        firstView.frame  = tableBaseView.bounds
         secondView.frame = tableBaseView.bounds
     }
     
-    @IBAction func changedSegmentValue(sender: UISegmentedControl) {
+    @IBAction func changedSegmentValue(_ sender: UISegmentedControl) {
         
         if tableSegment.selectedSegmentIndex == 0 {
-            firstView.hidden = false
-            secondView.hidden = true
+            firstView.isHidden  = false
+            secondView.isHidden = true
         } else {
-            firstView.hidden = true
-            secondView.hidden = false
+            firstView.isHidden  = true
+            secondView.isHidden = false
         }
     }
     
     func selectCell(identifier: String, item: String) {
-        performSegueWithIdentifier(identifier, sender: item)
+        performSegue(withIdentifier: identifier, sender: item)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if let first = segue.destinationViewController as? FirstViewController  {
+        if let first = segue.destination as? FirstViewController  {
             first.item = sender as! String
         }
         
-        if let second = segue.destinationViewController as? SecondViewController  {
+        if let second = segue.destination as? SecondViewController  {
             second.item = sender as! String
         }
     }

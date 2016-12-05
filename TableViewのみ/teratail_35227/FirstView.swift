@@ -17,7 +17,7 @@ class FirstView: UITableView, UITableViewDelegate, UITableViewDataSource {
         
         self.delegate = self
         self.dataSource = self
-        self.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        self.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     }
     
     // Data Array
@@ -26,30 +26,30 @@ class FirstView: UITableView, UITableViewDelegate, UITableViewDataSource {
     // MARK: - TableView Delegate & DataSource
     
     // Section Count
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     // Row Count
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataArray.count
     }
     
     // Row Height
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44
     }
     
     // Generate Cell
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = dataArray[indexPath.row]
         return cell
     }
     
     // Select Cell
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         parent.selectCell("FirstViewController", item: dataArray[indexPath.row])
     }
 }
